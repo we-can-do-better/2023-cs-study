@@ -42,7 +42,7 @@
 
 연결 리스트는 포인터로 연결되어 있어서 가리키는 노드만 변경해주면 되기 때문에 삽입과 삭제가 용이
 
-![img_1.png](img_1.png)
+![img_1.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_1.png)
 
 이미지 출처:[https://qnaplus.com/insert-element-singly-linked-list/](https://qnaplus.com/insert-element-singly-linked-list/)
 
@@ -54,7 +54,7 @@
 이런 경우 원하는 노드에 탐색(접근) + 삽입or삭제 를 해야하기 때문에 
 **시간 복잡도가 O(n+1)**이 되게 된다.
 >
-> ![img_4.png](img_4.png)
+> ![img_4.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_4.png)
 > 
 > 이미지 출처: [https://qnaplus.com/insert-element-singly-linked-list/](https://qnaplus.com/insert-element-singly-linked-list/)
 
@@ -74,12 +74,12 @@
 
 - 이진 탐색을 사용하는 배열
 
- ![img_5.png](img_5.png)
+ ![img_5.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_5.png)
   이미지 출처: [https://velog.io/@crystalhwang16/이진-탐색-binary-search](https://velog.io/@crystalhwang16/%EC%9D%B4%EC%A7%84-%ED%83%90%EC%83%89-binary-search)
 
 - 이진 탐색 트리
 
-![img_6.png](img_6.png)
+![img_6.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_6.png)
 
   이미지 출처: [https://ratsgo.github.io/data structure&algorithm/2017/10/22/bst/](https://ratsgo.github.io/data%20structure&algorithm/2017/10/22/bst/)
 
@@ -96,11 +96,11 @@
 4. 좌우 서브 트리 전부는 이진 탐색 트리여야 한다.
 ```
 
-![img_7.png](img_7.png)
+![img_7.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_7.png)
 
 이진 탐색 트리의 탐색/삽입/삭제 시간 복잡도는 트리의 높이를 h(height)라고 했을 때 $O(log(n))$의 시간 복잡도를 갖는다.
 
-![img_8.png](img_8.png)
+![img_8.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_8.png)
 
 ```
 키가 5인 노드를 찾고자 한다면??
@@ -117,7 +117,7 @@
 
 아래 우측 그림처럼 **균형이 잡힌 이진 탐색 트리**의 경우 시간 복잡도가 `O(log n)`이 되지만, 왼쪽 그림과 같이 **균형이 잡히지 않은 이진 탐색**(최악의 경우)의 경우 `O(n)`이 되기 때문에 이진 탐색의 장점을 가졌다고 보기 어렵다.
 
-![img_9.png](img_9.png)
+![img_9.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_9.png)
 
 그래서 이를 해결하기 위한 여러 자료구조(`AVL 트리`, `레드-블랙 트리`, …)가 생겨나게 되었고 그중 하나가 `B-tree`이다.
 
@@ -132,7 +132,7 @@ B-tree는 이진 탐색 트리의 일종으로 탐색 성능을 높이기 위해
 1. `이진 트리`가 아니라는 점
 2. 규칙에 따라 노드의 `자식 노드 개수는 2개 이상일 수 있다`는 점
 
-![img_10.png](img_10.png)
+![img_10.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_10.png)
 
 이미지 출처: [https://rebro.kr/169](https://rebro.kr/169)
 
@@ -145,25 +145,25 @@ B-tree는 이진 탐색 트리의 일종으로 탐색 성능을 높이기 위해
 
 1) 노드에는 2개 이상의 데이터(key)가 들어갈 수 있으며, 항상 정렬된 상태로 저장된다.
 
-![img_11.png](img_11.png)
+![img_11.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_11.png)
 
 2) **M차 B트리는 최대 M개의 자식을 가질 수 있는 B 트리**이다.
 
-![img_12.png](img_12.png)
+![img_12.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_12.png)
 
 3) 이때, 자식 노드는 `[M/2]개` 부터 `M개` 까지의 자식 노드를 가질 수 있다.
 
 위 그림은 3차 B 트리이기 때문에 1~3개의 자식 노드를 가질 수 있다.
 
-![img_13.png](img_13.png)
+![img_13.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_13.png)
 
 4) 특정 노드의 데이터(key)가 K개라면, 자식 노드의 개수는 K+1개여야 한다.
 
-![img_14.png](img_14.png)
+![img_14.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_14.png)
 
 5) 특정 노드의 왼쪽 서브 트리는 해당 노드의 key보다 작은 값들로, 오른쪽 서브 트리는 큰 값들로 구성되어 있다.
 
-![img_15.png](img_15.png)
+![img_15.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_15.png)
 
 6) 한 노드에는 `floor([M/2]-1)개`부터 `M-1개`의 자식 노드가 포함될 수 있다.
 
@@ -175,7 +175,7 @@ ex) 3차 B 트리 => `0~2` = `1.5 - 1` = `floor(0.5)` = `0`
 노드의 레벨(level) : 트리의 특정 깊이를 가지는 노드의 집합
 >
 
-![img_16.png](img_16.png)
+![img_16.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_16.png)
 
 이미지 출처: [https://zorba91.tistory.com/293](https://zorba91.tistory.com/293)
 
@@ -194,7 +194,7 @@ ex) 3차 B 트리 => `0~2` = `1.5 - 1` = `floor(0.5)` = `0`
 
 찾으려는 값 K = 14
 
-![img_17.png](img_17.png)
+![img_17.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_17.png)
 
 **B-Tree의 삽입 과정**
 
@@ -212,13 +212,13 @@ B-Tree는 균형을 유지해야 하기 때문에 key를 삽입하는 경우 트
 3-2. 해당 leaf node가 꽉 차 있다면 K를 삽입한 후 해당 node를 분할한다.
 ```
 
-![img_18.png](img_18.png)
+![img_18.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_18.png)
 
 `**13`이라는 값을 삽입하는 과정 (노드 분할)**
 
 1. (탐색 과정 생략) K가 들어갈 leaf node를 탐색
 
-![img_19.png](img_19.png)
+![img_19.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_19.png)
 
 2. 해당 leaf node에 K값을 삽입했으나 **한 노드가 가질 수 있는 최대 범위**를 벗어났기 때문에 해당 노드를 `분할`해야 한다.
 
@@ -232,31 +232,31 @@ B-Tree는 균형을 유지해야 하기 때문에 key를 삽입하는 경우 트
 > - 최대 `3 - 1` = `M-1` = `2`
 >
 
-![img_20.png](img_20.png)
+![img_20.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_20.png)
 
 
 3. leaf node의 중간 값(`13`)이 부모 node와 합쳐지게 되고, 13은 부모 노드인 `11`보다 큰 값이기 때문에 오른쪽에 위치하게 되고, 자식 노드들도 키 값에 따라 각각 분할되게 된다.
     
-![img_21.png](img_21.png)
+![img_21.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_21.png)
     
 
 4. 부모 노드 또한 key가 꽉 차있으므로 해당 노드를 `분할`해야 한다. 
     
-![img_22.png](img_22.png)
+![img_22.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_22.png)
     
 5. 마찬가지로, 중간 값인 `11` 이 부모 노드와 합쳐지게 된다. 
     
-![img_23.png](img_23.png)
+![img_23.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_23.png)
     
 
 6. 부모 노드(root node)에서도 역시 key가 꽉차있기 때문에 `분할`이 필요하다.
 
-![img_24.png](img_24.png)
+![img_24.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_24.png)
 
 
 7. 중간 값인 11이 부모 노드로 올라가게 되면서 결과적으로 다음과 같은 형태를 띄게 된다.
 
-![img_25.png](img_25.png)
+![img_25.png](../image/이진%20탐색%20트리(Binary%20Search%20Tree)부터%20B-Tree%20까지/img_25.png)
 
 
 [참고]
