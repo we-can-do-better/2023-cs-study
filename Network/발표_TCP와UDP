@@ -1,0 +1,141 @@
+![](https://images.velog.io/images/tyjk8997/post/7dcbd3b8-a290-45a5-852d-3d5a4e28de39/image.png)
+
+
+# TCP와 UDP
+TCP와 UDP는 OSI 표준모델과 TCP/IP 모델의 **전송계층**에서 사용되는 프로토콜입니다. 
+> 전송계층 : 송신자와 수신자를 연결하는 통신 서비스를 제공하고 IP에 의해 전달되는 패킷의 오류를 검사하며, 재전송 요구 제어등을 담당하는 계층입니다. 한마디로 데이터의 전달을 담당합니다.
+
+전송계층의 TCP와 UDP는 **포트 번호를 이용하여 주소를 지정하는것과 데이터 오류검사를 위한 체크섬 존재하는 두가지 공통점**을 가지고 있지만 <u>정확성(TCP)</u>을 추구할지 <u>신속성(UDP)</u>을 추구할지를 구분하여 나뉩니다.
+
+
+>포트 번호로 서비스를 식별한다.
+
+TCP와 UDP는 ‘포트 번호’라는 숫자를 이용하여 컴퓨터 안의 어떤 서비스(애플리케이션)에게 데이터를 전달하면 좋은지를 식별합니다. 포트 번호는 ‘0~65535’(16비트 분)까지의 숫자로 되어 있으며, 범위에 따라 용도가 정해져 있습니다. 
+
+‘0~1023’은 ‘잘 알려진 포트(well-known port)’라고 해서 웹 서버나 메일 서버 등과 같이 일반적인 서버 소프트웨어가 클라이언트의 서비스 요청을 대기할 때 사용합니다. 
+
+‘1024~49151’은 ‘등록된 포트(registered port)’로, 제조업체의 독자적인 서버 소프트웨어가 클라이언트의 서비스 요청을 대기할 때 사용합니다. 
+
+‘49152~65535’는 ‘동적 포트(dynamic port)’로, 서버가 클라이언트를 식별하기 위해 사용합니다.
+
+
+# TCP (Transmission Control Protocol)
+TCP(Trasmission Control Protocol)는 연결 지향적 프로토콜입니다. 연결 지향 프로토콜이란 클라이언트와 서버가 연결된 상태에서 데이터를 주고받는 프로토콜을 의미합니다. 클라이언트가 연결 요청(SYN 데이터 전송)을 하고, 서버가 연결을 수락하면 통신 선로가 고정되고, 모든 데이터는 고정된 통신 선로를 통해서 순차적으로 전달됩니다. 그렇기 때문에 TCP는 데이터를 정확하고 안정적으로 전달할 수 있습니다. TCP는 호스트간 신뢰성 있는 데이터 전달과 흐름제어를 합니다. TCP 프로토콜은 신뢰성 있는 데이터의 전송을 위해 확인작업을 거치는데 TCP는 패킷을 성공적으로 전송하면(ACK) 라는 신호를 날리고 만약에 ACK 신호가 제 시간에 도착하지 않으면 Timeout이 발생하여 패킷 손실이 발생한 패킷을 다시 전송해줍니다. TCP는 이렇게 데이터를 송신할때마다 확인 응답을 주고받는 절차가 있으므로 통신의 신뢰성이 올라갑니다. 주로 client와 Server 또는 P2P Socket 통신 등, 네트워크를 사용한 통신을 할 때 TCP 통신을 많이 사용합니다.
+
+## TCP의 특징
+- 연결형 (connnection-oriented) 서비스로 연결이 성공해야 통신이 가능하다.
+
+ 3-way handshaking 과정을 통해 연결을 설정
+ 4-way handshaking 을 통해 연결을 해제.
+
+- 신뢰성있는 데이터를 전송한다. (Sequence Number, Ack Number를 통한 신뢰성 보장)
+
+ [Dupack-based retransmission]
+ 정상적인 상황에서는 ACK 값이 연속적으로 전송되어야 한다.
+ 그러나 ACK값이 중복으로 올 경우 패킷 이상을 감지하고 재전송을 요청한다.
+ 
+ [Timeout-based retransmission]
+ 일정시간동안 ACK 값이 수신을 못할 경우 재전송을 요청한다.
+
+- 데이터 흐름 제어(수신자 버퍼 오버플로우 방지) 및 혼잡 제어(패킷 수가 과도하게 증가하는 현상 방지)
+
+ [흐름제어(Flow control)]
+데이터 처리 속도를 조절하여 수신자의 버퍼 오버플로우를 방지
+송신하는 곳에서 감당이 안되게 많은 데이터를 빠르게 보내 수신하는 곳에서 문제가 일어나는 것을 막는다.
+수신자가 윈도우크기(Window Size) 값을 통해 수신량을 정할 수 있다.
+
+ [혼잡제어(Congestion control)]
+네트워크 내의 패킷 수가 넘치게 증가하지 않도록 방지
+정보의 소통량이 과다하면 패킷을 조금만 전송하여 혼잡 붕괴 현상이 일어나는 것을 막는다.
+
+- 전이중(Full-Duplex), 점대점(Point to Point) 서비스
+ 
+ [전이중 (Full-Duplex)]
+전송이 양방향으로 동시에 일어날 수 있다.
+
+ [점대점 (Point to Point)]
+각 연결이 정확히 2개의 종단점을 가지고 있다.
+
+ => 멀티캐스팅이나 브로드캐스팅을 지원하지 않는다.
+
+- UDP보다 전송속도가 느리다.
+
+- 데이터의 전송 순서를 보장한다. (데이터의 순서 유지를 위해 각 바이트마다 번호를 부여)
+
+## TCP 3-way, 4-way handshake
+![](https://images.velog.io/images/tyjk8997/post/b75ca6f2-459a-4fab-8bc0-78cbaf4df991/image.png)
+
+TCP 3way handshake는 가상회선을 수립하는 단계입니다. 클라이언트는 서버에 요청을 전송할 수 있는지, 서버는 클라이언트에게 응답을 전송할 수 있는지 확인하는 과정입니다. 
+SYN, ACK 패킷을 주고받으며, 임의의 난수로 SYN 플래그를 전송하고, ACK 플래그에는 1을 더한값을 전송합니다. 정확한 순서는 SYN(n) -> ACK(n + 1), SYN(m) -> ACK(m + 1) 순으로 일어납니다.
+![](https://images.velog.io/images/tyjk8997/post/e534b85c-629f-44c1-91f8-bad4258f9da5/image.png)
+TCP 4way handshake는 TCP연결을 해제하는 단계로, 클라이언트는 서버에게 연결해제를 통지하고 서버가 이를 확인하고 클라이언트에게 이를 받았음을 전송해주고 최종적으로 연결이 해제됩니다. 단, 서버에서 소켓이 닫혔다고 통지해도 클라이언트 측에서는 일정시간 대기하는데, 혹시나 패킷이 나중에 도착할 수 있기 때문입니다.
+
+# UDP (User Datagram Protocol)
+UDP(User Datagram Protocol)는 전송계층의 비연결 지향적 프로토콜입니다. 비연결 지향적이란 데이터를 주고받을 때 연결 절차를 거치지 않고 발신자가 일방적으로 데이터를 발신하는 방식을 의미합니다. 연결 과정이 없기 때문에 TCP보다는 빠른 전송을 할 수 있지만 데이터 전달의 신뢰성은 떨어집니다. UDP는 발신자가 데이터 패킷을 순차적으로 보내더라도 이 패킷들은 서로 다른 통신 선로를 통해 전달 될 수 있습니다. 먼저 보낸 패킷이 느린 선로를 통해 전송될 경우 나중에 보낸 패킷보다 늦게 도착할 수 있으며 최악의 경우 잘못된 선로로 전송되어 유실될 수도 있습니다. 이럴 경우 TCP와는 다르게 UDP는 중간에 패킷이 유실이나 변조가 되어도 재전송을 하지 않습니다. 
+## UDP의 특징
+- 비연결형 서비스
+
+- 정보를 주고 받을 때 정보를 보내거나 받는다는 신호절차를 거치지 않는다.
+
+- UDP헤더의 CheckSum 필드를 통해 최소한의 오류만 검출한다.
+
+- 신뢰성이 낮다
+
+- TCP보다 속도가 빠르다
+
+# 정리
+
+- 공통점
+
+|TCP(Transfer Control Protocol) / UDP(User Datagram Protocol)|
+|:---:|
+|포트 번호를 이용하여 주소를 지정|
+|데이터 오류 검사를 위한 체크섬 존재|
+
+- 차이점
+
+|TCP(Transfer Control Protocol)|UDP(User Datagram Protocol)|
+|:---:|:---:|
+|연결이 성공해야 통신 가능(연결형 프로토콜)|비연결형 프로토콜(연결 없이 통신이 가능)|
+|신뢰성 있는 데이터 전송(데이터의 재전송 존재)|비신뢰성 있는 데이터 전송(데이터의 재전송 없음)|
+|일 대 일(Unicast) 통신|일 대 일, 일 대 다(Broadcast), 다 대 다(Multicast) 통신|
+
+
+# ★궁금한점★
+
+> 왜 ISN은 난수로 생성해야 하는가?
+The Initial Sequence Number (ISN) used in TCP/IP sessions should be as random as possible in order to prevent attacks such as IP address spoofing and session hijacking.
+-> TCP/IP 세션에 사용되는 Sequence Number는 IP 스푸핑, 세션 하이재킹과 같은 공격을 방지하기 위해 가능한 랜덤값으로 생성한다고 한다.
+
+↓
+
+> IP스푸핑이란?
+IP 스푸핑(IP Spoofing)이란 IP(Internet Protocol) 자체의 보안 취약성을 악용한 것으로 **자신의 IP 주소를 속여서 접속하는 공격**을 말한다. 신뢰 관계에 있는 두 시스템 사이에서 허가받지 않은 자가 자신의 IP 주소를 신뢰 관계에 있는 호스트의 IP 주소로 바꾸어 속이는 것을 말한다.
+
+
+> 세션 하이재킹이란?
+**클라이언트와 서버 사이의 세션을 탈취하는 공격 방법이다.**
+스푸핑을 통해 클라이언트와 서버 사이의 패킷 흐름을 관찰한 후,
+고의적으로 연결 재설정(Connection Reset; RST플래그 전송)을 일으킨다.
+서버는 공격자와 다시 연결 재수립을 위해 3-way handshaking을 진행하고,
+이후 공격자는 서버와 통신하면서 클라이언트가 보낸 정보도 Relay하여 하이재킹 사실을 알아차리기 어렵게 한다.
+
+![](https://images.velog.io/images/tyjk8997/post/aee1cb52-45fd-4b13-a83d-60f4d85f0729/image.png)
+
+
+
+그렇다면 IP자체의 어떤 보안 취약성이 있길래 공격자가 자신의 IP 주소를 쉽게 속일 수 있는 것일까?
+
+> IP자체의 보안 취약성?
+수신 호스트가 패킷을 판별할 때 단지 패킷에 적힌 IP 주소만을 가지고 송신 호스트를 판단하기 때문에 수신 호스트는 패킷이 어디서 왔는지 명확하게 알 수 있는 길이 없다고 한다 밑의 그림을 보면 IP 패킷은 자신의 소스 IP 주소(32비트)와 해당 패킷이 도착해야 할 목적지 IP 주소(32비트)를 담고 있음을 볼 수 있다. **이 32 비트 소스 IP 주소를 다른 신뢰된 호스트의 IP 주소로 바꾸거나 혹은 존재하지 않는 IP 주소를 이용하여 공격자가 자신의 위치를 속인다고 한다.**
+![](https://images.velog.io/images/tyjk8997/post/705894bb-4da7-4fb0-ae8a-d50e1f6f7b14/image.png)
+
+- 참고자료
+[왜 ISN은 난수로 생성하는가?에 대한 영어 글]
+https://www.quora.com/Why-in-a-TCP-sequence-is-a-number-taken-as-a-random-number-and-what-is-the-actual-number-at-the-start
+[IP 스푸핑에 대한 정리 글]
+https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=wnrjsxo&logNo=221111232129
+[세션 하이재킹에 대한 정리 글]
+https://satisfactoryplace.tistory.com/292
+[스니핑에 대한 FAQ]
+https://www.hostway.co.kr/support/faq/%EC%8A%A4%EB%8B%88%ED%95%91snipping-%EC%9D%B4-%EB%AC%B4%EC%97%87%EC%9D%B4%EB%A9%B0-%EC%98%88%EB%B0%A9%EB%8C%80%EC%B1%85%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B4-%EC%9E%88%EB%82%98%EC%9A%94
