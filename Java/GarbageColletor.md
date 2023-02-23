@@ -56,13 +56,13 @@ Root Space 부터 그래프 순회를 통해 연결된 객체를 찾아내고(Ma
     - Survival : Minor GC로부터 살아남은 객체들이 존재하는 영역
       - Survival 0 과 1 중 하나는 꼭 비어있어야 된다. 
 
-![img_4.png](img/img_4.png)
+![img_4.png](img/img_4.png)</br>
 eden 영역이 가득차게 되면 minor GC 가 일어남. Root로 부터 접근 가능한 객체라 판단되면 
-![img_5.png](img/img_5.png)
+![img_5.png](img/img_5.png)</br>
 survival 영역으로 옮겨지는데 객체들의 숫자가 1로 올라감. 해당 숫자는 age-bit 를 뜻함
-![img_6.png](img/img_6.png)
+![img_6.png](img/img_6.png)</br>
 위와 같은 행위를 반복하다 survival로 넘어온 객체 중 하나가 오래 살아남아서 age-bit가 3이 되는데
-![img_7.png](img/img_7.png)
+![img_7.png](img/img_7.png)</br>
 JVM GC에서는 일정수준의 age-bit(default : 15) 를 넘어가면 Old Generation으로 넘겨줌 (* 이과정을 Promotion 이라고함)
 이러한 방식으로 Old Generation도 다 채워지게 되면 이때 majorGC 가 발생 하면서 ```Mark And Sweep Compact``` 방식을 통해 필요없는 메모리를 비워줌
 
