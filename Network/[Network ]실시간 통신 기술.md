@@ -1,0 +1,4 @@
+- Polling
+- Long Polling
+- Web Socket
+- SSE
